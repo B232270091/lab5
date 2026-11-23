@@ -1,0 +1,262 @@
+newman
+
+Lab05 — Зориуд буруу статус хүлээх oracle
+
+□ T01 — Идэвхтэй оюутан урьдач нөхцөлөө хангаад бүртгүүлнэ
+└ Бэлтгэл — оюутны төлөв ба үзсэн хичээл
+  PUT http://localhost:3000/students/B231234567 [200 OK, 178B, 68ms]
+  √  Статус 200 байна
+  √  result нь OK байна
+
+└ Бэлтгэл — хичээлийн урьдач нөхцөл
+  PUT http://localhost:3000/courses/CS313 [200 OK, 178B, 3ms]
+  √  Статус 200 байна
+  √  result нь OK байна
+
+└ Идэвхтэй оюутан урьдач нөхцөлөө хангаад бүртгүүлнэ
+  POST http://localhost:3000/registrations [201 Created, 203B, 3ms]
+  1. Зориуд буруу: статус 200 гэж хүлээнэ
+  √  result нь OK байна
+  √  registrationID нь эерэг тоо байна
+
+□ T02 — Байхгүй оюутанд ERROR_NO_STUDENT өгнө
+└ Бэлтгэл — оюутны төлөв ба үзсэн хичээл
+  PUT http://localhost:3000/students/B232270091_T02_61b52992-21ef-440e-b4dd-a0b1dcacc865 [200 OK, 178B, 3ms]
+  √  Статус 200 байна
+  √  result нь OK байна
+
+└ Бэлтгэл — хичээлийн урьдач нөхцөл
+  PUT http://localhost:3000/courses/CS313_T02_61b52992-21ef-440e-b4dd-a0b1dcacc865 [200 OK, 178B, 3ms]
+  √  Статус 200 байна
+  √  result нь OK байна
+
+└ Байхгүй оюутанд ERROR_NO_STUDENT өгнө
+  POST http://localhost:3000/registrations [200 OK, 192B, 4ms]
+  √  Статус 200 байна
+  √  result нь ERROR_NO_STUDENT байна
+
+□ T03 — Идэвхгүй оюутанд ERROR_INACTIVE_STUDENT өгнө
+└ Бэлтгэл — оюутны төлөв ба үзсэн хичээл
+  PUT http://localhost:3000/students/B232270091_T03_61b52992-21ef-440e-b4dd-a0b1dcacc865 [200 OK, 178B, 4ms]
+  √  Статус 200 байна
+  √  result нь OK байна
+
+└ Бэлтгэл — хичээлийн урьдач нөхцөл
+  PUT http://localhost:3000/courses/CS313_T03_61b52992-21ef-440e-b4dd-a0b1dcacc865 [200 OK, 178B, 4ms]
+  √  Статус 200 байна
+  √  result нь OK байна
+
+└ Идэвхгүй оюутанд ERROR_INACTIVE_STUDENT өгнө
+  POST http://localhost:3000/registrations [200 OK, 198B, 3ms]
+  √  Статус 200 байна
+  √  result нь ERROR_INACTIVE_STUDENT байна
+
+□ T04 — Байхгүй хичээлд ERROR_NO_COURSE өгнө
+└ Бэлтгэл — оюутны төлөв ба үзсэн хичээл
+  PUT http://localhost:3000/students/B232270091_T04_61b52992-21ef-440e-b4dd-a0b1dcacc865 [200 OK, 178B, 4ms]
+  √  Статус 200 байна
+  √  result нь OK байна
+
+└ Бэлтгэл — хичээлийн урьдач нөхцөл
+  PUT http://localhost:3000/courses/CS313_T04_61b52992-21ef-440e-b4dd-a0b1dcacc865 [200 OK, 178B, 3ms]
+  √  Статус 200 байна
+  √  result нь OK байна
+
+└ Байхгүй хичээлд ERROR_NO_COURSE өгнө
+  POST http://localhost:3000/registrations [200 OK, 191B, 3ms]
+  √  Статус 200 байна
+  √  result нь ERROR_NO_COURSE байна
+
+□ T05 — Урьдач хичээл огт үзээгүй бол ERROR_PREREQUISITES өгнө
+└ Бэлтгэл — оюутны төлөв ба үзсэн хичээл
+  PUT http://localhost:3000/students/B232270091_T05_61b52992-21ef-440e-b4dd-a0b1dcacc865 [200 OK, 178B, 4ms]
+  √  Статус 200 байна
+  √  result нь OK байна
+
+└ Бэлтгэл — хичээлийн урьдач нөхцөл
+  PUT http://localhost:3000/courses/CS313_T05_61b52992-21ef-440e-b4dd-a0b1dcacc865 [200 OK, 178B, 4ms]
+  √  Статус 200 байна
+  √  result нь OK байна
+
+└ Урьдач хичээл огт үзээгүй бол ERROR_PREREQUISITES өгнө
+  POST http://localhost:3000/registrations [200 OK, 215B, 3ms]
+  √  Статус 200 байна
+  √  result нь ERROR_PREREQUISITES байна
+  √  Дутуу урьдач хичээлүүд зөв байна
+
+□ T06 — Урьдач хичээлийн заримыг үзсэн бол дутууг нь буцаана
+└ Бэлтгэл — оюутны төлөв ба үзсэн хичээл
+  PUT http://localhost:3000/students/B232270091_T06_61b52992-21ef-440e-b4dd-a0b1dcacc865 [200 OK, 178B, 3ms]
+  √  Статус 200 байна
+  √  result нь OK байна
+
+└ Бэлтгэл — хичээлийн урьдач нөхцөл
+  PUT http://localhost:3000/courses/CS313_T06_61b52992-21ef-440e-b4dd-a0b1dcacc865 [200 OK, 178B, 3ms]
+  √  Статус 200 байна
+  √  result нь OK байна
+
+└ Урьдач хичээлийн заримыг үзсэн бол дутууг нь буцаана
+  POST http://localhost:3000/registrations [200 OK, 215B, 2ms]
+  √  Статус 200 байна
+  √  result нь ERROR_PREREQUISITES байна
+  √  Дутуу урьдач хичээлүүд зөв байна
+
+□ T07 — Оюутан хичээл хоёулаа байхгүй үед ERROR_NO_STUDENT түрүүлнэ
+└ Бэлтгэл — оюутны төлөв ба үзсэн хичээл
+  PUT http://localhost:3000/students/B232270091_T07_61b52992-21ef-440e-b4dd-a0b1dcacc865 [200 OK, 178B, 3ms]
+  √  Статус 200 байна
+  √  result нь OK байна
+
+└ Бэлтгэл — хичээлийн урьдач нөхцөл
+  PUT http://localhost:3000/courses/CS313_T07_61b52992-21ef-440e-b4dd-a0b1dcacc865 [200 OK, 178B, 3ms]
+  √  Статус 200 байна
+  √  result нь OK байна
+
+└ Оюутан хичээл хоёулаа байхгүй үед ERROR_NO_STUDENT түрүүлнэ
+  POST http://localhost:3000/registrations [200 OK, 192B, 2ms]
+  √  Статус 200 байна
+  √  result нь ERROR_NO_STUDENT байна
+
+□ T08 — Идэвхгүй оюутан ба байхгүй хичээлд оюутны алдаа түрүүлнэ
+└ Бэлтгэл — оюутны төлөв ба үзсэн хичээл
+  PUT http://localhost:3000/students/B232270091_T08_61b52992-21ef-440e-b4dd-a0b1dcacc865 [200 OK, 178B, 4ms]
+  √  Статус 200 байна
+  √  result нь OK байна
+
+└ Бэлтгэл — хичээлийн урьдач нөхцөл
+  PUT http://localhost:3000/courses/CS313_T08_61b52992-21ef-440e-b4dd-a0b1dcacc865 [200 OK, 178B, 3ms]
+  √  Статус 200 байна
+  √  result нь OK байна
+
+└ Идэвхгүй оюутан ба байхгүй хичээлд оюутны алдаа түрүүлнэ
+  POST http://localhost:3000/registrations [200 OK, 198B, 2ms]
+  √  Статус 200 байна
+  √  result нь ERROR_INACTIVE_STUDENT байна
+
+□ T09 — Урьдач нөхцөлгүй хичээлд хоосон coursesTaken зөвшөөрнө
+└ Бэлтгэл — оюутны төлөв ба үзсэн хичээл
+  PUT http://localhost:3000/students/B232270091_T09_61b52992-21ef-440e-b4dd-a0b1dcacc865 [200 OK, 178B, 3ms]
+  √  Статус 200 байна
+  √  result нь OK байна
+
+└ Бэлтгэл — хичээлийн урьдач нөхцөл
+  PUT http://localhost:3000/courses/CS313_T09_61b52992-21ef-440e-b4dd-a0b1dcacc865 [200 OK, 178B, 2ms]
+  √  Статус 200 байна
+  √  result нь OK байна
+
+└ Урьдач нөхцөлгүй хичээлд хоосон coursesTaken зөвшөөрнө
+  POST http://localhost:3000/registrations [201 Created, 203B, 3ms]
+  √  Статус 201 байна
+  √  result нь OK байна
+  √  registrationID нь эерэг тоо байна
+
+□ T10 — studentID талбар дутуу бол 400 ERROR_BAD_REQUEST өгнө
+└ Бэлтгэл — оюутны төлөв ба үзсэн хичээл
+  PUT http://localhost:3000/students/B232270091_T10_61b52992-21ef-440e-b4dd-a0b1dcacc865 [200 OK, 178B, 2ms]
+  √  Статус 200 байна
+  √  result нь OK байна
+
+└ Бэлтгэл — хичээлийн урьдач нөхцөл
+  PUT http://localhost:3000/courses/CS313_T10_61b52992-21ef-440e-b4dd-a0b1dcacc865 [200 OK, 178B, 3ms]
+  √  Статус 200 байна
+  √  result нь OK байна
+
+└ studentID талбар дутуу бол 400 ERROR_BAD_REQUEST өгнө
+  POST http://localhost:3000/registrations [400 Bad Request, 202B, 3ms]
+  √  Статус 400 байна
+  √  result нь ERROR_BAD_REQUEST байна
+
+□ T11 — courseID талбар дутуу бол 400 ERROR_BAD_REQUEST өгнө
+└ Бэлтгэл — оюутны төлөв ба үзсэн хичээл
+  PUT http://localhost:3000/students/B232270091_T11_61b52992-21ef-440e-b4dd-a0b1dcacc865 [200 OK, 178B, 3ms]
+  √  Статус 200 байна
+  √  result нь OK байна
+
+└ Бэлтгэл — хичээлийн урьдач нөхцөл
+  PUT http://localhost:3000/courses/CS313_T11_61b52992-21ef-440e-b4dd-a0b1dcacc865 [200 OK, 178B, 3ms]
+  √  Статус 200 байна
+  √  result нь OK байна
+
+└ courseID талбар дутуу бол 400 ERROR_BAD_REQUEST өгнө
+  POST http://localhost:3000/registrations [400 Bad Request, 202B, 3ms]
+  √  Статус 400 байна
+  √  result нь ERROR_BAD_REQUEST байна
+
+□ T12 — Эвдэрсэн JSON-д 400 ERROR_BAD_JSON өгнө
+└ Бэлтгэл — оюутны төлөв ба үзсэн хичээл
+  PUT http://localhost:3000/students/B232270091_T12_61b52992-21ef-440e-b4dd-a0b1dcacc865 [200 OK, 178B, 3ms]
+  √  Статус 200 байна
+  √  result нь OK байна
+
+└ Бэлтгэл — хичээлийн урьдач нөхцөл
+  PUT http://localhost:3000/courses/CS313_T12_61b52992-21ef-440e-b4dd-a0b1dcacc865 [200 OK, 178B, 3ms]
+  √  Статус 200 байна
+  √  result нь OK байна
+
+└ Эвдэрсэн JSON-д 400 ERROR_BAD_JSON өгнө
+  POST http://localhost:3000/registrations [400 Bad Request, 199B, 4ms]
+  √  Статус 400 байна
+  √  result нь ERROR_BAD_JSON байна
+
+□ T13 — Setup-ийн орхисон талбарууд үндсэн утгаа авна
+└ Бэлтгэл — оюутны төлөв ба үзсэн хичээл
+  PUT http://localhost:3000/students/B232270091_T13_61b52992-21ef-440e-b4dd-a0b1dcacc865 [200 OK, 178B, 3ms]
+  √  Статус 200 байна
+  √  result нь OK байна
+
+└ Бэлтгэл — хичээлийн урьдач нөхцөл
+  PUT http://localhost:3000/courses/CS313_T13_61b52992-21ef-440e-b4dd-a0b1dcacc865 [200 OK, 178B, 2ms]
+  √  Статус 200 байна
+  √  result нь OK байна
+
+└ Setup-ийн орхисон талбарууд үндсэн утгаа авна
+  POST http://localhost:3000/registrations [201 Created, 203B, 3ms]
+  √  Статус 201 байна
+  √  result нь OK байна
+  √  registrationID нь эерэг тоо байна
+
+□ T14 — Бүх урьдач хичээл болон нэмэлт хичээл үзсэн бол бүртгэнэ
+└ Бэлтгэл — оюутны төлөв ба үзсэн хичээл
+  PUT http://localhost:3000/students/B232270091_T14_61b52992-21ef-440e-b4dd-a0b1dcacc865 [200 OK, 178B, 2ms]
+  √  Статус 200 байна
+  √  result нь OK байна
+
+└ Бэлтгэл — хичээлийн урьдач нөхцөл
+  PUT http://localhost:3000/courses/CS313_T14_61b52992-21ef-440e-b4dd-a0b1dcacc865 [200 OK, 178B, 2ms]
+  √  Статус 200 байна
+  √  result нь OK байна
+
+└ Бүх урьдач хичээл болон нэмэлт хичээл үзсэн бол бүртгэнэ
+  POST http://localhost:3000/registrations [201 Created, 203B, 2ms]
+  √  Статус 201 байна
+  √  result нь OK байна
+  √  registrationID нь эерэг тоо байна
+
+┌─────────────────────────┬─────────────────┬─────────────────┐
+│                         │        executed │          failed │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              iterations │               1 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│                requests │              42 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│            test-scripts │              42 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│      prerequest-scripts │              42 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              assertions │              90 │               1 │
+├─────────────────────────┴─────────────────┴─────────────────┤
+│ total run duration: 3.8s                                    │
+├─────────────────────────────────────────────────────────────┤
+│ total data received: 907B (approx)                          │
+├─────────────────────────────────────────────────────────────┤
+│ average response time: 4ms [min: 2ms, max: 68ms, s.d.: 9ms] │
+└─────────────────────────────────────────────────────────────┘
+
+  #  failure         detail
+
+ 1.  AssertionError  Зориуд буруу: статус 200 гэж хүлээнэ
+                     expected response to have status code 200 but got 201
+                     at assertion:0 in test-script
+                     inside "T01 — Идэвхтэй оюутан урьдач нөхцөлөө хангаад бүртгүүлнэ / Идэвхтэй оюутан урьдач нөхцөлөө хангаад бүртгүүлнэ"
+
+exit=1

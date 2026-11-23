@@ -22,7 +22,7 @@ v26.13.0
 ## Ажиллуулах
 
 ```sh
-npm install
+npm ci
 npm start
 ```
 
@@ -104,3 +104,73 @@ T01-ээс бусад кейсийн ID-д ажиллуулалтын UUID бо�
 PUT нь тухайн бичлэгийг бүхэлд нь дарж бичдэг тул тест өмнөх кейсийн төлвөөс хамаарахгүй.
 Кейсүүдийн дарааллыг урвуу болгож, нэг сервер дээр дараалан давтаж шалгахад мөн амжилттай байсан.
 Бүртгэлийн дугаар хуримтлагдах учраас яг нэг дугаартай тэнцүүлэх oracle ашиглаагүй.
+
+## PASS, FAIL, DOWN ажиллуулалтын нотолгоо
+
+| Ажиллуулалт | Хүсэлт executed / failed | Assertion executed / failed | Exit code | Лог |
+| --- | ---: | ---: | ---: | --- |
+| PASS | 42 / 0 | 90 / 0 | 0 | [newman-pass.txt](results/newman-pass.txt) |
+| FAIL | 42 / 0 | 90 / 1 | 1 | [newman-fail.txt](results/newman-fail.txt) |
+| DOWN | 42 / 42 | 90 / 90 | 1 | [newman-down.txt](results/newman-down.txt) |
+
+Үндсэн collection-ийн тестийн тоо буюу **assertions executed = 90**; спецификацийн кейсийн тоо нь 14.
+Лог бүр Newman-ы бүтэн гаралт болон тухайн процессоос авсан `exit=` мөрийг агуулна.
+FAIL collection-д зөвхөн T01-ийн POST хүсэлтийн статусын oracle-ыг `201`-ийн оронд `200` хүлээхээр өөрчилсөн.
+Сервер зөв `201` буцаасан тул `expected response to have status code 200 but got 201` гэсэн алдаа гарч, exit code `1` болсон.
+Үндсэн `lab05-collection.json`-ийн зөв oracle хэвээр байгаа.
+DOWN ажиллуулалтын өмнө серверийн процессыг зогсоосон тул `ECONNREFUSED` нь сервертэй холбогдож чадаагүй интерфейсийн алдаа; FAIL ажиллуулалт дахь oracle-ийн алдаа нь ирсэн зөв хариуг буруу хүлээлттэй харьцуулснаас үүссэн.
+
+Сервер ажиллаж байх үед PASS болон FAIL-ийг дараах байдлаар давтана:
+
+```sh
+mkdir -p results
+npx newman run lab05-collection.json --color off > results/newman-pass.txt 2>&1
+pass_exit=$?
+echo "exit=$pass_exit" >> results/newman-pass.txt
+npx newman run lab05-collection-fail.json --color off > results/newman-fail.txt 2>&1
+fail_exit=$?
+echo "exit=$fail_exit" >> results/newman-fail.txt
+```
+
+DOWN-ийг давтахын өмнө сервер ажиллуулсан терминалд `Ctrl+C` дарна:
+
+```sh
+npx newman run lab05-collection.json --color off > results/newman-down.txt 2>&1
+down_exit=$?
+echo "exit=$down_exit" >> results/newman-down.txt
+```
+
+Windows PowerShell-д жишээлбэл:
+
+```powershell
+New-Item -ItemType Directory -Force results | Out-Null
+npx newman run lab05-collection.json --color off 2>&1 | Out-File -Encoding utf8 results/newman-pass.txt
+$runExit = $LASTEXITCODE
+Add-Content -Encoding utf8 results/newman-pass.txt "exit=$runExit"
+```
+
+FAIL үед collection-ийг `lab05-collection-fail.json`, логийн нэрийг `newman-fail.txt` болгож солино; DOWN үед серверээ унтраагаад үндсэн collection-ийг `newman-down.txt` руу ажиллуулна.
+
+## Нийтийн API нэмэлт даалгавар
+
+[JSONPlaceholder /users](https://jsonplaceholder.typicode.com/users) руу GET хийдэг `lab05-public-api.json` collection-д статус `200`, хариу массив эсэх, эхний хэрэглэгчийн нэр `Leanne Graham` эсэх гэсэн 3 oracle бичсэн.
+Гурвуул амжилттай, exit code `0`; бүтэн гаралт [newman-public.txt](results/newman-public.txt) файлд байна.
+GET-only хүсэлтэд setup хэрэггүй тул локал бүртгэлийн API-гаас хялбар боловч гадаад сүлжээний холболтоос хамааралтай байлаа.
+
+```sh
+npx newman run lab05-public-api.json --color off
+```
+
+## Дүгнэлт
+
+Тест дизайны таван алхмаас сонголтуудын хослолыг бодит спецификаци болгох хэсэг хамгийн их бодол шаардлаа.
+Оюутан байхгүй мөртлөө түүний үзсэн хичээлийг бүрэн эсвэл дутуу гэж ангилах боломжгүй учраас ийм сонголтуудыг хэрэглэгдэхгүй гэж тэмдэглэсэн.
+Давхар алдааны хүсэлтүүдээр оюутны оршин байдал болон идэвхийг хичээлийн оршин байхаас өмнө шалгадгийг тогтоолоо.
+Кейс бүр setup-аа дахин хийдэг болсон нь өмнөх бүртгэлээс хамаарч алдаа гарахаас сэргийлсэн.
+Урьдач нөхцөлгүй хичээл болон хоосон coursesTaken хоёр хамт байхад бүртгэл зөвшөөрөгдөхийг тусад нь шалгах хэрэгтэй байв.
+Сонгосон спецификациудын хүрээнд серверийн хүлээгдсэн ажиллагаанаас зөрсөн согог илрээгүй.
+Харин зөв статусыг зориуд буруу хүлээсэн oracle нь FAIL collection-ийг унагаасан тул ногоон үр дүнг шалгалт ажиллаагүйтэй андуурахгүй болсон.
+Сервер унтарсан үеийн холболтын алдааг буруу oracle-оос ялгаж тайлбарлах нь үр дүнг оношлоход чухал байлаа.
+Exit code-ийг тусад нь хадгалснаар энэ тестийг дараа нь CI дээр чанарын шалгуур болгон ашиглах боломжтой болсон.
+
+Newman-ы ашиглалтын мэдээлэл: [албан ёсны баримт бичиг](https://learning.postman.com/docs/reference/newman-cli/command-line-integration-with-newman/).

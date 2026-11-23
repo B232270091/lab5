@@ -1,0 +1,1532 @@
+{
+  "info": {
+    "name": "Lab05 — Зориуд буруу статус хүлээх oracle",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "if (!pm.collectionVariables.get(\"runId\")) {",
+          "  pm.collectionVariables.set(\"runId\", pm.variables.replaceIn(\"{{$randomUUID}}\"));",
+          "}"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "T01 — Идэвхтэй оюутан урьдач нөхцөлөө хангаад бүртгүүлнэ",
+      "item": [
+        {
+          "name": "Бэлтгэл — оюутны төлөв ба үзсэн хичээл",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"active\",\n  \"coursesTaken\": [\n    \"CS201\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/students/B231234567"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Бэлтгэл — хичээлийн урьдач нөхцөл",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prerequisites\": [\n    \"CS201\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/courses/CS313"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Идэвхтэй оюутан урьдач нөхцөлөө хангаад бүртгүүлнэ",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"studentID\": \"B231234567\",\n  \"courseID\": \"CS313\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/registrations"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Зориуд буруу: статус 200 гэж хүлээнэ\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });",
+                  "pm.test(\"registrationID нь эерэг тоо байна\", function () { pm.expect(pm.response.json().registrationID).to.be.a(\"number\").and.above(0); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "T02 — Байхгүй оюутанд ERROR_NO_STUDENT өгнө",
+      "item": [
+        {
+          "name": "Бэлтгэл — оюутны төлөв ба үзсэн хичээл",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"active\",\n  \"coursesTaken\": [\n    \"CS201\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/students/B232270091_T02_{{runId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Бэлтгэл — хичээлийн урьдач нөхцөл",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prerequisites\": [\n    \"CS201\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/courses/CS313_T02_{{runId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Байхгүй оюутанд ERROR_NO_STUDENT өгнө",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"studentID\": \"B232270091_T02_{{runId}}_absent\",\n  \"courseID\": \"CS313_T02_{{runId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/registrations"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь ERROR_NO_STUDENT байна\", function () { pm.expect(pm.response.json().result).to.eql(\"ERROR_NO_STUDENT\"); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "T03 — Идэвхгүй оюутанд ERROR_INACTIVE_STUDENT өгнө",
+      "item": [
+        {
+          "name": "Бэлтгэл — оюутны төлөв ба үзсэн хичээл",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"inactive\",\n  \"coursesTaken\": [\n    \"CS201\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/students/B232270091_T03_{{runId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Бэлтгэл — хичээлийн урьдач нөхцөл",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prerequisites\": [\n    \"CS201\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/courses/CS313_T03_{{runId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Идэвхгүй оюутанд ERROR_INACTIVE_STUDENT өгнө",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"studentID\": \"B232270091_T03_{{runId}}\",\n  \"courseID\": \"CS313_T03_{{runId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/registrations"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь ERROR_INACTIVE_STUDENT байна\", function () { pm.expect(pm.response.json().result).to.eql(\"ERROR_INACTIVE_STUDENT\"); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "T04 — Байхгүй хичээлд ERROR_NO_COURSE өгнө",
+      "item": [
+        {
+          "name": "Бэлтгэл — оюутны төлөв ба үзсэн хичээл",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"active\",\n  \"coursesTaken\": [\n    \"CS201\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/students/B232270091_T04_{{runId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Бэлтгэл — хичээлийн урьдач нөхцөл",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prerequisites\": [\n    \"CS201\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/courses/CS313_T04_{{runId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Байхгүй хичээлд ERROR_NO_COURSE өгнө",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"studentID\": \"B232270091_T04_{{runId}}\",\n  \"courseID\": \"CS313_T04_{{runId}}_absent\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/registrations"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь ERROR_NO_COURSE байна\", function () { pm.expect(pm.response.json().result).to.eql(\"ERROR_NO_COURSE\"); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "T05 — Урьдач хичээл огт үзээгүй бол ERROR_PREREQUISITES өгнө",
+      "item": [
+        {
+          "name": "Бэлтгэл — оюутны төлөв ба үзсэн хичээл",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"active\",\n  \"coursesTaken\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/students/B232270091_T05_{{runId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Бэлтгэл — хичээлийн урьдач нөхцөл",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prerequisites\": [\n    \"CS201\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/courses/CS313_T05_{{runId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Урьдач хичээл огт үзээгүй бол ERROR_PREREQUISITES өгнө",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"studentID\": \"B232270091_T05_{{runId}}\",\n  \"courseID\": \"CS313_T05_{{runId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/registrations"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь ERROR_PREREQUISITES байна\", function () { pm.expect(pm.response.json().result).to.eql(\"ERROR_PREREQUISITES\"); });",
+                  "pm.test(\"Дутуу урьдач хичээлүүд зөв байна\", function () { pm.expect(pm.response.json().missing).to.have.members([\"CS201\"]); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "T06 — Урьдач хичээлийн заримыг үзсэн бол дутууг нь буцаана",
+      "item": [
+        {
+          "name": "Бэлтгэл — оюутны төлөв ба үзсэн хичээл",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"active\",\n  \"coursesTaken\": [\n    \"CS201\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/students/B232270091_T06_{{runId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Бэлтгэл — хичээлийн урьдач нөхцөл",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prerequisites\": [\n    \"CS201\",\n    \"CS202\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/courses/CS313_T06_{{runId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Урьдач хичээлийн заримыг үзсэн бол дутууг нь буцаана",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"studentID\": \"B232270091_T06_{{runId}}\",\n  \"courseID\": \"CS313_T06_{{runId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/registrations"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь ERROR_PREREQUISITES байна\", function () { pm.expect(pm.response.json().result).to.eql(\"ERROR_PREREQUISITES\"); });",
+                  "pm.test(\"Дутуу урьдач хичээлүүд зөв байна\", function () { pm.expect(pm.response.json().missing).to.have.members([\"CS202\"]); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "T07 — Оюутан хичээл хоёулаа байхгүй үед ERROR_NO_STUDENT түрүүлнэ",
+      "item": [
+        {
+          "name": "Бэлтгэл — оюутны төлөв ба үзсэн хичээл",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"active\",\n  \"coursesTaken\": [\n    \"CS201\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/students/B232270091_T07_{{runId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Бэлтгэл — хичээлийн урьдач нөхцөл",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prerequisites\": [\n    \"CS201\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/courses/CS313_T07_{{runId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Оюутан хичээл хоёулаа байхгүй үед ERROR_NO_STUDENT түрүүлнэ",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"studentID\": \"B232270091_T07_{{runId}}_absent\",\n  \"courseID\": \"CS313_T07_{{runId}}_absent\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/registrations"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь ERROR_NO_STUDENT байна\", function () { pm.expect(pm.response.json().result).to.eql(\"ERROR_NO_STUDENT\"); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "T08 — Идэвхгүй оюутан ба байхгүй хичээлд оюутны алдаа түрүүлнэ",
+      "item": [
+        {
+          "name": "Бэлтгэл — оюутны төлөв ба үзсэн хичээл",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"inactive\",\n  \"coursesTaken\": [\n    \"CS201\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/students/B232270091_T08_{{runId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Бэлтгэл — хичээлийн урьдач нөхцөл",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prerequisites\": [\n    \"CS201\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/courses/CS313_T08_{{runId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Идэвхгүй оюутан ба байхгүй хичээлд оюутны алдаа түрүүлнэ",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"studentID\": \"B232270091_T08_{{runId}}\",\n  \"courseID\": \"CS313_T08_{{runId}}_absent\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/registrations"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь ERROR_INACTIVE_STUDENT байна\", function () { pm.expect(pm.response.json().result).to.eql(\"ERROR_INACTIVE_STUDENT\"); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "T09 — Урьдач нөхцөлгүй хичээлд хоосон coursesTaken зөвшөөрнө",
+      "item": [
+        {
+          "name": "Бэлтгэл — оюутны төлөв ба үзсэн хичээл",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"active\",\n  \"coursesTaken\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/students/B232270091_T09_{{runId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Бэлтгэл — хичээлийн урьдач нөхцөл",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prerequisites\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/courses/CS313_T09_{{runId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Урьдач нөхцөлгүй хичээлд хоосон coursesTaken зөвшөөрнө",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"studentID\": \"B232270091_T09_{{runId}}\",\n  \"courseID\": \"CS313_T09_{{runId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/registrations"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 201 байна\", function () { pm.response.to.have.status(201); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });",
+                  "pm.test(\"registrationID нь эерэг тоо байна\", function () { pm.expect(pm.response.json().registrationID).to.be.a(\"number\").and.above(0); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "T10 — studentID талбар дутуу бол 400 ERROR_BAD_REQUEST өгнө",
+      "item": [
+        {
+          "name": "Бэлтгэл — оюутны төлөв ба үзсэн хичээл",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"active\",\n  \"coursesTaken\": [\n    \"CS201\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/students/B232270091_T10_{{runId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Бэлтгэл — хичээлийн урьдач нөхцөл",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prerequisites\": [\n    \"CS201\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/courses/CS313_T10_{{runId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "studentID талбар дутуу бол 400 ERROR_BAD_REQUEST өгнө",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"courseID\": \"CS313_T10_{{runId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/registrations"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 400 байна\", function () { pm.response.to.have.status(400); });",
+                  "pm.test(\"result нь ERROR_BAD_REQUEST байна\", function () { pm.expect(pm.response.json().result).to.eql(\"ERROR_BAD_REQUEST\"); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "T11 — courseID талбар дутуу бол 400 ERROR_BAD_REQUEST өгнө",
+      "item": [
+        {
+          "name": "Бэлтгэл — оюутны төлөв ба үзсэн хичээл",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"active\",\n  \"coursesTaken\": [\n    \"CS201\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/students/B232270091_T11_{{runId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Бэлтгэл — хичээлийн урьдач нөхцөл",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prerequisites\": [\n    \"CS201\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/courses/CS313_T11_{{runId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "courseID талбар дутуу бол 400 ERROR_BAD_REQUEST өгнө",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"studentID\": \"B232270091_T11_{{runId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/registrations"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 400 байна\", function () { pm.response.to.have.status(400); });",
+                  "pm.test(\"result нь ERROR_BAD_REQUEST байна\", function () { pm.expect(pm.response.json().result).to.eql(\"ERROR_BAD_REQUEST\"); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "T12 — Эвдэрсэн JSON-д 400 ERROR_BAD_JSON өгнө",
+      "item": [
+        {
+          "name": "Бэлтгэл — оюутны төлөв ба үзсэн хичээл",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"active\",\n  \"coursesTaken\": [\n    \"CS201\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/students/B232270091_T12_{{runId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Бэлтгэл — хичээлийн урьдач нөхцөл",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prerequisites\": [\n    \"CS201\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/courses/CS313_T12_{{runId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Эвдэрсэн JSON-д 400 ERROR_BAD_JSON өгнө",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"studentID\":",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/registrations"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 400 байна\", function () { pm.response.to.have.status(400); });",
+                  "pm.test(\"result нь ERROR_BAD_JSON байна\", function () { pm.expect(pm.response.json().result).to.eql(\"ERROR_BAD_JSON\"); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "T13 — Setup-ийн орхисон талбарууд үндсэн утгаа авна",
+      "item": [
+        {
+          "name": "Бэлтгэл — оюутны төлөв ба үзсэн хичээл",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/students/B232270091_T13_{{runId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Бэлтгэл — хичээлийн урьдач нөхцөл",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/courses/CS313_T13_{{runId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Setup-ийн орхисон талбарууд үндсэн утгаа авна",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"studentID\": \"B232270091_T13_{{runId}}\",\n  \"courseID\": \"CS313_T13_{{runId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/registrations"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 201 байна\", function () { pm.response.to.have.status(201); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });",
+                  "pm.test(\"registrationID нь эерэг тоо байна\", function () { pm.expect(pm.response.json().registrationID).to.be.a(\"number\").and.above(0); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "T14 — Бүх урьдач хичээл болон нэмэлт хичээл үзсэн бол бүртгэнэ",
+      "item": [
+        {
+          "name": "Бэлтгэл — оюутны төлөв ба үзсэн хичээл",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"active\",\n  \"coursesTaken\": [\n    \"CS201\",\n    \"CS202\",\n    \"CS101\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/students/B232270091_T14_{{runId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Бэлтгэл — хичээлийн урьдач нөхцөл",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prerequisites\": [\n    \"CS201\",\n    \"CS202\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/courses/CS313_T14_{{runId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Бүх урьдач хичээл болон нэмэлт хичээл үзсэн бол бүртгэнэ",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"studentID\": \"B232270091_T14_{{runId}}\",\n  \"courseID\": \"CS313_T14_{{runId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/registrations"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 201 байна\", function () { pm.response.to.have.status(201); });",
+                  "pm.test(\"result нь OK байна\", function () { pm.expect(pm.response.json().result).to.eql(\"OK\"); });",
+                  "pm.test(\"registrationID нь эерэг тоо байна\", function () { pm.expect(pm.response.json().registrationID).to.be.a(\"number\").and.above(0); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

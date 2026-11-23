@@ -1,0 +1,957 @@
+newman
+
+Lab05 — Хичээлд бүртгүүлэх API
+
+□ T01 — Идэвхтэй оюутан урьдач нөхцөлөө хангаад бүртгүүлнэ
+└ Бэлтгэл — оюутны төлөв ба үзсэн хичээл
+  PUT http://localhost:3000/students/B231234567 [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+  2. Статус 200 байна
+  3. result нь OK байна
+
+└ Бэлтгэл — хичээлийн урьдач нөхцөл
+  PUT http://localhost:3000/courses/CS313 [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+  5. Статус 200 байна
+  6. result нь OK байна
+
+└ Идэвхтэй оюутан урьдач нөхцөлөө хангаад бүртгүүлнэ
+  POST http://localhost:3000/registrations [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+  8. Статус 201 байна
+  9. result нь OK байна
+ 10. registrationID нь эерэг тоо байна
+
+□ T02 — Байхгүй оюутанд ERROR_NO_STUDENT өгнө
+└ Бэлтгэл — оюутны төлөв ба үзсэн хичээл
+  PUT http://localhost:3000/students/B232270091_T02_3d143d2d-fc06-4124-b6d0-4c09de8b1bec [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 12. Статус 200 байна
+ 13. result нь OK байна
+
+└ Бэлтгэл — хичээлийн урьдач нөхцөл
+  PUT http://localhost:3000/courses/CS313_T02_3d143d2d-fc06-4124-b6d0-4c09de8b1bec [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 15. Статус 200 байна
+ 16. result нь OK байна
+
+└ Байхгүй оюутанд ERROR_NO_STUDENT өгнө
+  POST http://localhost:3000/registrations [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 18. Статус 200 байна
+ 19. result нь ERROR_NO_STUDENT байна
+
+□ T03 — Идэвхгүй оюутанд ERROR_INACTIVE_STUDENT өгнө
+└ Бэлтгэл — оюутны төлөв ба үзсэн хичээл
+  PUT http://localhost:3000/students/B232270091_T03_3d143d2d-fc06-4124-b6d0-4c09de8b1bec [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 21. Статус 200 байна
+ 22. result нь OK байна
+
+└ Бэлтгэл — хичээлийн урьдач нөхцөл
+  PUT http://localhost:3000/courses/CS313_T03_3d143d2d-fc06-4124-b6d0-4c09de8b1bec [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 24. Статус 200 байна
+ 25. result нь OK байна
+
+└ Идэвхгүй оюутанд ERROR_INACTIVE_STUDENT өгнө
+  POST http://localhost:3000/registrations [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 27. Статус 200 байна
+ 28. result нь ERROR_INACTIVE_STUDENT байна
+
+□ T04 — Байхгүй хичээлд ERROR_NO_COURSE өгнө
+└ Бэлтгэл — оюутны төлөв ба үзсэн хичээл
+  PUT http://localhost:3000/students/B232270091_T04_3d143d2d-fc06-4124-b6d0-4c09de8b1bec [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 30. Статус 200 байна
+ 31. result нь OK байна
+
+└ Бэлтгэл — хичээлийн урьдач нөхцөл
+  PUT http://localhost:3000/courses/CS313_T04_3d143d2d-fc06-4124-b6d0-4c09de8b1bec [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 33. Статус 200 байна
+ 34. result нь OK байна
+
+└ Байхгүй хичээлд ERROR_NO_COURSE өгнө
+  POST http://localhost:3000/registrations [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 36. Статус 200 байна
+ 37. result нь ERROR_NO_COURSE байна
+
+□ T05 — Урьдач хичээл огт үзээгүй бол ERROR_PREREQUISITES өгнө
+└ Бэлтгэл — оюутны төлөв ба үзсэн хичээл
+  PUT http://localhost:3000/students/B232270091_T05_3d143d2d-fc06-4124-b6d0-4c09de8b1bec [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 39. Статус 200 байна
+ 40. result нь OK байна
+
+└ Бэлтгэл — хичээлийн урьдач нөхцөл
+  PUT http://localhost:3000/courses/CS313_T05_3d143d2d-fc06-4124-b6d0-4c09de8b1bec [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 42. Статус 200 байна
+ 43. result нь OK байна
+
+└ Урьдач хичээл огт үзээгүй бол ERROR_PREREQUISITES өгнө
+  POST http://localhost:3000/registrations [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 45. Статус 200 байна
+ 46. result нь ERROR_PREREQUISITES байна
+ 47. Дутуу урьдач хичээлүүд зөв байна
+
+□ T06 — Урьдач хичээлийн заримыг үзсэн бол дутууг нь буцаана
+└ Бэлтгэл — оюутны төлөв ба үзсэн хичээл
+  PUT http://localhost:3000/students/B232270091_T06_3d143d2d-fc06-4124-b6d0-4c09de8b1bec [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 49. Статус 200 байна
+ 50. result нь OK байна
+
+└ Бэлтгэл — хичээлийн урьдач нөхцөл
+  PUT http://localhost:3000/courses/CS313_T06_3d143d2d-fc06-4124-b6d0-4c09de8b1bec [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 52. Статус 200 байна
+ 53. result нь OK байна
+
+└ Урьдач хичээлийн заримыг үзсэн бол дутууг нь буцаана
+  POST http://localhost:3000/registrations [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 55. Статус 200 байна
+ 56. result нь ERROR_PREREQUISITES байна
+ 57. Дутуу урьдач хичээлүүд зөв байна
+
+□ T07 — Оюутан хичээл хоёулаа байхгүй үед ERROR_NO_STUDENT түрүүлнэ
+└ Бэлтгэл — оюутны төлөв ба үзсэн хичээл
+  PUT http://localhost:3000/students/B232270091_T07_3d143d2d-fc06-4124-b6d0-4c09de8b1bec [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 59. Статус 200 байна
+ 60. result нь OK байна
+
+└ Бэлтгэл — хичээлийн урьдач нөхцөл
+  PUT http://localhost:3000/courses/CS313_T07_3d143d2d-fc06-4124-b6d0-4c09de8b1bec [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 62. Статус 200 байна
+ 63. result нь OK байна
+
+└ Оюутан хичээл хоёулаа байхгүй үед ERROR_NO_STUDENT түрүүлнэ
+  POST http://localhost:3000/registrations [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 65. Статус 200 байна
+ 66. result нь ERROR_NO_STUDENT байна
+
+□ T08 — Идэвхгүй оюутан ба байхгүй хичээлд оюутны алдаа түрүүлнэ
+└ Бэлтгэл — оюутны төлөв ба үзсэн хичээл
+  PUT http://localhost:3000/students/B232270091_T08_3d143d2d-fc06-4124-b6d0-4c09de8b1bec [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 68. Статус 200 байна
+ 69. result нь OK байна
+
+└ Бэлтгэл — хичээлийн урьдач нөхцөл
+  PUT http://localhost:3000/courses/CS313_T08_3d143d2d-fc06-4124-b6d0-4c09de8b1bec [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 71. Статус 200 байна
+ 72. result нь OK байна
+
+└ Идэвхгүй оюутан ба байхгүй хичээлд оюутны алдаа түрүүлнэ
+  POST http://localhost:3000/registrations [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 74. Статус 200 байна
+ 75. result нь ERROR_INACTIVE_STUDENT байна
+
+□ T09 — Урьдач нөхцөлгүй хичээлд хоосон coursesTaken зөвшөөрнө
+└ Бэлтгэл — оюутны төлөв ба үзсэн хичээл
+  PUT http://localhost:3000/students/B232270091_T09_3d143d2d-fc06-4124-b6d0-4c09de8b1bec [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 77. Статус 200 байна
+ 78. result нь OK байна
+
+└ Бэлтгэл — хичээлийн урьдач нөхцөл
+  PUT http://localhost:3000/courses/CS313_T09_3d143d2d-fc06-4124-b6d0-4c09de8b1bec [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 80. Статус 200 байна
+ 81. result нь OK байна
+
+└ Урьдач нөхцөлгүй хичээлд хоосон coursesTaken зөвшөөрнө
+  POST http://localhost:3000/registrations [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 83. Статус 201 байна
+ 84. result нь OK байна
+ 85. registrationID нь эерэг тоо байна
+
+□ T10 — studentID талбар дутуу бол 400 ERROR_BAD_REQUEST өгнө
+└ Бэлтгэл — оюутны төлөв ба үзсэн хичээл
+  PUT http://localhost:3000/students/B232270091_T10_3d143d2d-fc06-4124-b6d0-4c09de8b1bec [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 87. Статус 200 байна
+ 88. result нь OK байна
+
+└ Бэлтгэл — хичээлийн урьдач нөхцөл
+  PUT http://localhost:3000/courses/CS313_T10_3d143d2d-fc06-4124-b6d0-4c09de8b1bec [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 90. Статус 200 байна
+ 91. result нь OK байна
+
+└ studentID талбар дутуу бол 400 ERROR_BAD_REQUEST өгнө
+  POST http://localhost:3000/registrations [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 93. Статус 400 байна
+ 94. result нь ERROR_BAD_REQUEST байна
+
+□ T11 — courseID талбар дутуу бол 400 ERROR_BAD_REQUEST өгнө
+└ Бэлтгэл — оюутны төлөв ба үзсэн хичээл
+  PUT http://localhost:3000/students/B232270091_T11_3d143d2d-fc06-4124-b6d0-4c09de8b1bec [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 96. Статус 200 байна
+ 97. result нь OK байна
+
+└ Бэлтгэл — хичээлийн урьдач нөхцөл
+  PUT http://localhost:3000/courses/CS313_T11_3d143d2d-fc06-4124-b6d0-4c09de8b1bec [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 99. Статус 200 байна
+100. result нь OK байна
+
+└ courseID талбар дутуу бол 400 ERROR_BAD_REQUEST өгнө
+  POST http://localhost:3000/registrations [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+102. Статус 400 байна
+103. result нь ERROR_BAD_REQUEST байна
+
+□ T12 — Эвдэрсэн JSON-д 400 ERROR_BAD_JSON өгнө
+└ Бэлтгэл — оюутны төлөв ба үзсэн хичээл
+  PUT http://localhost:3000/students/B232270091_T12_3d143d2d-fc06-4124-b6d0-4c09de8b1bec [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+105. Статус 200 байна
+106. result нь OK байна
+
+└ Бэлтгэл — хичээлийн урьдач нөхцөл
+  PUT http://localhost:3000/courses/CS313_T12_3d143d2d-fc06-4124-b6d0-4c09de8b1bec [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+108. Статус 200 байна
+109. result нь OK байна
+
+└ Эвдэрсэн JSON-д 400 ERROR_BAD_JSON өгнө
+  POST http://localhost:3000/registrations [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+111. Статус 400 байна
+112. result нь ERROR_BAD_JSON байна
+
+□ T13 — Setup-ийн орхисон талбарууд үндсэн утгаа авна
+└ Бэлтгэл — оюутны төлөв ба үзсэн хичээл
+  PUT http://localhost:3000/students/B232270091_T13_3d143d2d-fc06-4124-b6d0-4c09de8b1bec [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+114. Статус 200 байна
+115. result нь OK байна
+
+└ Бэлтгэл — хичээлийн урьдач нөхцөл
+  PUT http://localhost:3000/courses/CS313_T13_3d143d2d-fc06-4124-b6d0-4c09de8b1bec [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+117. Статус 200 байна
+118. result нь OK байна
+
+└ Setup-ийн орхисон талбарууд үндсэн утгаа авна
+  POST http://localhost:3000/registrations [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+120. Статус 201 байна
+121. result нь OK байна
+122. registrationID нь эерэг тоо байна
+
+□ T14 — Бүх урьдач хичээл болон нэмэлт хичээл үзсэн бол бүртгэнэ
+└ Бэлтгэл — оюутны төлөв ба үзсэн хичээл
+  PUT http://localhost:3000/students/B232270091_T14_3d143d2d-fc06-4124-b6d0-4c09de8b1bec [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+124. Статус 200 байна
+125. result нь OK байна
+
+└ Бэлтгэл — хичээлийн урьдач нөхцөл
+  PUT http://localhost:3000/courses/CS313_T14_3d143d2d-fc06-4124-b6d0-4c09de8b1bec [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+127. Статус 200 байна
+128. result нь OK байна
+
+└ Бүх урьдач хичээл болон нэмэлт хичээл үзсэн бол бүртгэнэ
+  POST http://localhost:3000/registrations [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+130. Статус 201 байна
+131. result нь OK байна
+132. registrationID нь эерэг тоо байна
+
+┌─────────────────────────┬──────────┬──────────┐
+│                         │ executed │   failed │
+├─────────────────────────┼──────────┼──────────┤
+│              iterations │        1 │        0 │
+├─────────────────────────┼──────────┼──────────┤
+│                requests │       42 │       42 │
+├─────────────────────────┼──────────┼──────────┤
+│            test-scripts │       42 │        0 │
+├─────────────────────────┼──────────┼──────────┤
+│      prerequest-scripts │       42 │        0 │
+├─────────────────────────┼──────────┼──────────┤
+│              assertions │       90 │       90 │
+├─────────────────────────┴──────────┴──────────┤
+│ total run duration: 3.7s                      │
+├───────────────────────────────────────────────┤
+│ total data received: 0B (approx)              │
+└───────────────────────────────────────────────┘
+
+    #  failure         detail
+
+ 001.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 002.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T01 — Идэвхтэй оюутан урьдач нөхцөлөө хангаад бүртгүүлнэ / Бэлтгэл — оюутны төлөв ба үзсэн хичээл"
+
+ 003.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T01 — Идэвхтэй оюутан урьдач нөхцөлөө хангаад бүртгүүлнэ / Бэлтгэл — оюутны төлөв ба үзсэн хичээл"
+
+ 004.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 005.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T01 — Идэвхтэй оюутан урьдач нөхцөлөө хангаад бүртгүүлнэ / Бэлтгэл — хичээлийн урьдач нөхцөл"
+
+ 006.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T01 — Идэвхтэй оюутан урьдач нөхцөлөө хангаад бүртгүүлнэ / Бэлтгэл — хичээлийн урьдач нөхцөл"
+
+ 007.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 008.  AssertionError  Статус 201 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T01 — Идэвхтэй оюутан урьдач нөхцөлөө хангаад бүртгүүлнэ / Идэвхтэй оюутан урьдач нөхцөлөө хангаад бүртгүүлнэ"
+
+ 009.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T01 — Идэвхтэй оюутан урьдач нөхцөлөө хангаад бүртгүүлнэ / Идэвхтэй оюутан урьдач нөхцөлөө хангаад бүртгүүлнэ"
+
+ 010.  JSONError       registrationID нь эерэг тоо байна
+                       "undefined" is not valid JSON
+                       at assertion:2 in test-script
+                       inside "T01 — Идэвхтэй оюутан урьдач нөхцөлөө хангаад бүртгүүлнэ / Идэвхтэй оюутан урьдач нөхцөлөө хангаад бүртгүүлнэ"
+
+ 011.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 012.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T02 — Байхгүй оюутанд ERROR_NO_STUDENT өгнө / Бэлтгэл — оюутны төлөв ба үзсэн хичээл"
+
+ 013.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T02 — Байхгүй оюутанд ERROR_NO_STUDENT өгнө / Бэлтгэл — оюутны төлөв ба үзсэн хичээл"
+
+ 014.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 015.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T02 — Байхгүй оюутанд ERROR_NO_STUDENT өгнө / Бэлтгэл — хичээлийн урьдач нөхцөл"
+
+ 016.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T02 — Байхгүй оюутанд ERROR_NO_STUDENT өгнө / Бэлтгэл — хичээлийн урьдач нөхцөл"
+
+ 017.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 018.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T02 — Байхгүй оюутанд ERROR_NO_STUDENT өгнө / Байхгүй оюутанд ERROR_NO_STUDENT өгнө"
+
+ 019.  JSONError       result нь ERROR_NO_STUDENT байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T02 — Байхгүй оюутанд ERROR_NO_STUDENT өгнө / Байхгүй оюутанд ERROR_NO_STUDENT өгнө"
+
+ 020.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 021.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T03 — Идэвхгүй оюутанд ERROR_INACTIVE_STUDENT өгнө / Бэлтгэл — оюутны төлөв ба үзсэн хичээл"
+
+ 022.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T03 — Идэвхгүй оюутанд ERROR_INACTIVE_STUDENT өгнө / Бэлтгэл — оюутны төлөв ба үзсэн хичээл"
+
+ 023.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 024.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T03 — Идэвхгүй оюутанд ERROR_INACTIVE_STUDENT өгнө / Бэлтгэл — хичээлийн урьдач нөхцөл"
+
+ 025.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T03 — Идэвхгүй оюутанд ERROR_INACTIVE_STUDENT өгнө / Бэлтгэл — хичээлийн урьдач нөхцөл"
+
+ 026.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 027.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T03 — Идэвхгүй оюутанд ERROR_INACTIVE_STUDENT өгнө / Идэвхгүй оюутанд ERROR_INACTIVE_STUDENT өгнө"
+
+ 028.  JSONError       result нь ERROR_INACTIVE_STUDENT байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T03 — Идэвхгүй оюутанд ERROR_INACTIVE_STUDENT өгнө / Идэвхгүй оюутанд ERROR_INACTIVE_STUDENT өгнө"
+
+ 029.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 030.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T04 — Байхгүй хичээлд ERROR_NO_COURSE өгнө / Бэлтгэл — оюутны төлөв ба үзсэн хичээл"
+
+ 031.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T04 — Байхгүй хичээлд ERROR_NO_COURSE өгнө / Бэлтгэл — оюутны төлөв ба үзсэн хичээл"
+
+ 032.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 033.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T04 — Байхгүй хичээлд ERROR_NO_COURSE өгнө / Бэлтгэл — хичээлийн урьдач нөхцөл"
+
+ 034.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T04 — Байхгүй хичээлд ERROR_NO_COURSE өгнө / Бэлтгэл — хичээлийн урьдач нөхцөл"
+
+ 035.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 036.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T04 — Байхгүй хичээлд ERROR_NO_COURSE өгнө / Байхгүй хичээлд ERROR_NO_COURSE өгнө"
+
+ 037.  JSONError       result нь ERROR_NO_COURSE байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T04 — Байхгүй хичээлд ERROR_NO_COURSE өгнө / Байхгүй хичээлд ERROR_NO_COURSE өгнө"
+
+ 038.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 039.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T05 — Урьдач хичээл огт үзээгүй бол ERROR_PREREQUISITES өгнө / Бэлтгэл — оюутны төлөв ба үзсэн хичээл"
+
+ 040.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T05 — Урьдач хичээл огт үзээгүй бол ERROR_PREREQUISITES өгнө / Бэлтгэл — оюутны төлөв ба үзсэн хичээл"
+
+ 041.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 042.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T05 — Урьдач хичээл огт үзээгүй бол ERROR_PREREQUISITES өгнө / Бэлтгэл — хичээлийн урьдач нөхцөл"
+
+ 043.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T05 — Урьдач хичээл огт үзээгүй бол ERROR_PREREQUISITES өгнө / Бэлтгэл — хичээлийн урьдач нөхцөл"
+
+ 044.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 045.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T05 — Урьдач хичээл огт үзээгүй бол ERROR_PREREQUISITES өгнө / Урьдач хичээл огт үзээгүй бол ERROR_PREREQUISITES өгнө"
+
+ 046.  JSONError       result нь ERROR_PREREQUISITES байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T05 — Урьдач хичээл огт үзээгүй бол ERROR_PREREQUISITES өгнө / Урьдач хичээл огт үзээгүй бол ERROR_PREREQUISITES өгнө"
+
+ 047.  JSONError       Дутуу урьдач хичээлүүд зөв байна
+                       "undefined" is not valid JSON
+                       at assertion:2 in test-script
+                       inside "T05 — Урьдач хичээл огт үзээгүй бол ERROR_PREREQUISITES өгнө / Урьдач хичээл огт үзээгүй бол ERROR_PREREQUISITES өгнө"
+
+ 048.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 049.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T06 — Урьдач хичээлийн заримыг үзсэн бол дутууг нь буцаана / Бэлтгэл — оюутны төлөв ба үзсэн хичээл"
+
+ 050.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T06 — Урьдач хичээлийн заримыг үзсэн бол дутууг нь буцаана / Бэлтгэл — оюутны төлөв ба үзсэн хичээл"
+
+ 051.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 052.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T06 — Урьдач хичээлийн заримыг үзсэн бол дутууг нь буцаана / Бэлтгэл — хичээлийн урьдач нөхцөл"
+
+ 053.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T06 — Урьдач хичээлийн заримыг үзсэн бол дутууг нь буцаана / Бэлтгэл — хичээлийн урьдач нөхцөл"
+
+ 054.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 055.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T06 — Урьдач хичээлийн заримыг үзсэн бол дутууг нь буцаана / Урьдач хичээлийн заримыг үзсэн бол дутууг нь буцаана"
+
+ 056.  JSONError       result нь ERROR_PREREQUISITES байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T06 — Урьдач хичээлийн заримыг үзсэн бол дутууг нь буцаана / Урьдач хичээлийн заримыг үзсэн бол дутууг нь буцаана"
+
+ 057.  JSONError       Дутуу урьдач хичээлүүд зөв байна
+                       "undefined" is not valid JSON
+                       at assertion:2 in test-script
+                       inside "T06 — Урьдач хичээлийн заримыг үзсэн бол дутууг нь буцаана / Урьдач хичээлийн заримыг үзсэн бол дутууг нь буцаана"
+
+ 058.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 059.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T07 — Оюутан хичээл хоёулаа байхгүй үед ERROR_NO_STUDENT түрүүлнэ / Бэлтгэл — оюутны төлөв ба үзсэн хичээл"
+
+ 060.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T07 — Оюутан хичээл хоёулаа байхгүй үед ERROR_NO_STUDENT түрүүлнэ / Бэлтгэл — оюутны төлөв ба үзсэн хичээл"
+
+ 061.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 062.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T07 — Оюутан хичээл хоёулаа байхгүй үед ERROR_NO_STUDENT түрүүлнэ / Бэлтгэл — хичээлийн урьдач нөхцөл"
+
+ 063.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T07 — Оюутан хичээл хоёулаа байхгүй үед ERROR_NO_STUDENT түрүүлнэ / Бэлтгэл — хичээлийн урьдач нөхцөл"
+
+ 064.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 065.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T07 — Оюутан хичээл хоёулаа байхгүй үед ERROR_NO_STUDENT түрүүлнэ / Оюутан хичээл хоёулаа байхгүй үед ERROR_NO_STUDENT түрүүлнэ"
+
+ 066.  JSONError       result нь ERROR_NO_STUDENT байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T07 — Оюутан хичээл хоёулаа байхгүй үед ERROR_NO_STUDENT түрүүлнэ / Оюутан хичээл хоёулаа байхгүй үед ERROR_NO_STUDENT түрүүлнэ"
+
+ 067.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 068.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T08 — Идэвхгүй оюутан ба байхгүй хичээлд оюутны алдаа түрүүлнэ / Бэлтгэл — оюутны төлөв ба үзсэн хичээл"
+
+ 069.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T08 — Идэвхгүй оюутан ба байхгүй хичээлд оюутны алдаа түрүүлнэ / Бэлтгэл — оюутны төлөв ба үзсэн хичээл"
+
+ 070.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 071.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T08 — Идэвхгүй оюутан ба байхгүй хичээлд оюутны алдаа түрүүлнэ / Бэлтгэл — хичээлийн урьдач нөхцөл"
+
+ 072.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T08 — Идэвхгүй оюутан ба байхгүй хичээлд оюутны алдаа түрүүлнэ / Бэлтгэл — хичээлийн урьдач нөхцөл"
+
+ 073.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 074.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T08 — Идэвхгүй оюутан ба байхгүй хичээлд оюутны алдаа түрүүлнэ / Идэвхгүй оюутан ба байхгүй хичээлд оюутны алдаа түрүүлнэ"
+
+ 075.  JSONError       result нь ERROR_INACTIVE_STUDENT байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T08 — Идэвхгүй оюутан ба байхгүй хичээлд оюутны алдаа түрүүлнэ / Идэвхгүй оюутан ба байхгүй хичээлд оюутны алдаа түрүүлнэ"
+
+ 076.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 077.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T09 — Урьдач нөхцөлгүй хичээлд хоосон coursesTaken зөвшөөрнө / Бэлтгэл — оюутны төлөв ба үзсэн хичээл"
+
+ 078.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T09 — Урьдач нөхцөлгүй хичээлд хоосон coursesTaken зөвшөөрнө / Бэлтгэл — оюутны төлөв ба үзсэн хичээл"
+
+ 079.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 080.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T09 — Урьдач нөхцөлгүй хичээлд хоосон coursesTaken зөвшөөрнө / Бэлтгэл — хичээлийн урьдач нөхцөл"
+
+ 081.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T09 — Урьдач нөхцөлгүй хичээлд хоосон coursesTaken зөвшөөрнө / Бэлтгэл — хичээлийн урьдач нөхцөл"
+
+ 082.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 083.  AssertionError  Статус 201 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T09 — Урьдач нөхцөлгүй хичээлд хоосон coursesTaken зөвшөөрнө / Урьдач нөхцөлгүй хичээлд хоосон coursesTaken зөвшөөрнө"
+
+ 084.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T09 — Урьдач нөхцөлгүй хичээлд хоосон coursesTaken зөвшөөрнө / Урьдач нөхцөлгүй хичээлд хоосон coursesTaken зөвшөөрнө"
+
+ 085.  JSONError       registrationID нь эерэг тоо байна
+                       "undefined" is not valid JSON
+                       at assertion:2 in test-script
+                       inside "T09 — Урьдач нөхцөлгүй хичээлд хоосон coursesTaken зөвшөөрнө / Урьдач нөхцөлгүй хичээлд хоосон coursesTaken зөвшөөрнө"
+
+ 086.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 087.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T10 — studentID талбар дутуу бол 400 ERROR_BAD_REQUEST өгнө / Бэлтгэл — оюутны төлөв ба үзсэн хичээл"
+
+ 088.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T10 — studentID талбар дутуу бол 400 ERROR_BAD_REQUEST өгнө / Бэлтгэл — оюутны төлөв ба үзсэн хичээл"
+
+ 089.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 090.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T10 — studentID талбар дутуу бол 400 ERROR_BAD_REQUEST өгнө / Бэлтгэл — хичээлийн урьдач нөхцөл"
+
+ 091.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T10 — studentID талбар дутуу бол 400 ERROR_BAD_REQUEST өгнө / Бэлтгэл — хичээлийн урьдач нөхцөл"
+
+ 092.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 093.  AssertionError  Статус 400 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T10 — studentID талбар дутуу бол 400 ERROR_BAD_REQUEST өгнө / studentID талбар дутуу бол 400 ERROR_BAD_REQUEST өгнө"
+
+ 094.  JSONError       result нь ERROR_BAD_REQUEST байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T10 — studentID талбар дутуу бол 400 ERROR_BAD_REQUEST өгнө / studentID талбар дутуу бол 400 ERROR_BAD_REQUEST өгнө"
+
+ 095.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 096.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T11 — courseID талбар дутуу бол 400 ERROR_BAD_REQUEST өгнө / Бэлтгэл — оюутны төлөв ба үзсэн хичээл"
+
+ 097.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T11 — courseID талбар дутуу бол 400 ERROR_BAD_REQUEST өгнө / Бэлтгэл — оюутны төлөв ба үзсэн хичээл"
+
+ 098.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 099.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T11 — courseID талбар дутуу бол 400 ERROR_BAD_REQUEST өгнө / Бэлтгэл — хичээлийн урьдач нөхцөл"
+
+ 100.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T11 — courseID талбар дутуу бол 400 ERROR_BAD_REQUEST өгнө / Бэлтгэл — хичээлийн урьдач нөхцөл"
+
+ 101.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 102.  AssertionError  Статус 400 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T11 — courseID талбар дутуу бол 400 ERROR_BAD_REQUEST өгнө / courseID талбар дутуу бол 400 ERROR_BAD_REQUEST өгнө"
+
+ 103.  JSONError       result нь ERROR_BAD_REQUEST байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T11 — courseID талбар дутуу бол 400 ERROR_BAD_REQUEST өгнө / courseID талбар дутуу бол 400 ERROR_BAD_REQUEST өгнө"
+
+ 104.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 105.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T12 — Эвдэрсэн JSON-д 400 ERROR_BAD_JSON өгнө / Бэлтгэл — оюутны төлөв ба үзсэн хичээл"
+
+ 106.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T12 — Эвдэрсэн JSON-д 400 ERROR_BAD_JSON өгнө / Бэлтгэл — оюутны төлөв ба үзсэн хичээл"
+
+ 107.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 108.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T12 — Эвдэрсэн JSON-д 400 ERROR_BAD_JSON өгнө / Бэлтгэл — хичээлийн урьдач нөхцөл"
+
+ 109.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T12 — Эвдэрсэн JSON-д 400 ERROR_BAD_JSON өгнө / Бэлтгэл — хичээлийн урьдач нөхцөл"
+
+ 110.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 111.  AssertionError  Статус 400 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T12 — Эвдэрсэн JSON-д 400 ERROR_BAD_JSON өгнө / Эвдэрсэн JSON-д 400 ERROR_BAD_JSON өгнө"
+
+ 112.  JSONError       result нь ERROR_BAD_JSON байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T12 — Эвдэрсэн JSON-д 400 ERROR_BAD_JSON өгнө / Эвдэрсэн JSON-д 400 ERROR_BAD_JSON өгнө"
+
+ 113.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 114.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T13 — Setup-ийн орхисон талбарууд үндсэн утгаа авна / Бэлтгэл — оюутны төлөв ба үзсэн хичээл"
+
+ 115.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T13 — Setup-ийн орхисон талбарууд үндсэн утгаа авна / Бэлтгэл — оюутны төлөв ба үзсэн хичээл"
+
+ 116.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 117.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T13 — Setup-ийн орхисон талбарууд үндсэн утгаа авна / Бэлтгэл — хичээлийн урьдач нөхцөл"
+
+ 118.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T13 — Setup-ийн орхисон талбарууд үндсэн утгаа авна / Бэлтгэл — хичээлийн урьдач нөхцөл"
+
+ 119.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 120.  AssertionError  Статус 201 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T13 — Setup-ийн орхисон талбарууд үндсэн утгаа авна / Setup-ийн орхисон талбарууд үндсэн утгаа авна"
+
+ 121.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T13 — Setup-ийн орхисон талбарууд үндсэн утгаа авна / Setup-ийн орхисон талбарууд үндсэн утгаа авна"
+
+ 122.  JSONError       registrationID нь эерэг тоо байна
+                       "undefined" is not valid JSON
+                       at assertion:2 in test-script
+                       inside "T13 — Setup-ийн орхисон талбарууд үндсэн утгаа авна / Setup-ийн орхисон талбарууд үндсэн утгаа авна"
+
+ 123.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 124.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T14 — Бүх урьдач хичээл болон нэмэлт хичээл үзсэн бол бүртгэнэ / Бэлтгэл — оюутны төлөв ба үзсэн хичээл"
+
+ 125.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T14 — Бүх урьдач хичээл болон нэмэлт хичээл үзсэн бол бүртгэнэ / Бэлтгэл — оюутны төлөв ба үзсэн хичээл"
+
+ 126.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 127.  AssertionError  Статус 200 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T14 — Бүх урьдач хичээл болон нэмэлт хичээл үзсэн бол бүртгэнэ / Бэлтгэл — хичээлийн урьдач нөхцөл"
+
+ 128.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T14 — Бүх урьдач хичээл болон нэмэлт хичээл үзсэн бол бүртгэнэ / Бэлтгэл — хичээлийн урьдач нөхцөл"
+
+ 129.  Error
+                       connect ECONNREFUSED 127.0.0.1:3000
+                       at request
+                       inside ""
+
+ 130.  AssertionError  Статус 201 байна
+                       expected PostmanResponse{ …(5) } to have property 'code'
+                       at assertion:0 in test-script
+                       inside "T14 — Бүх урьдач хичээл болон нэмэлт хичээл үзсэн бол бүртгэнэ / Бүх урьдач хичээл болон нэмэлт хичээл үзсэн бол бүртгэнэ"
+
+ 131.  JSONError       result нь OK байна
+                       "undefined" is not valid JSON
+                       at assertion:1 in test-script
+                       inside "T14 — Бүх урьдач хичээл болон нэмэлт хичээл үзсэн бол бүртгэнэ / Бүх урьдач хичээл болон нэмэлт хичээл үзсэн бол бүртгэнэ"
+
+ 132.  JSONError       registrationID нь эерэг тоо байна
+                       "undefined" is not valid JSON
+                       at assertion:2 in test-script
+                       inside "T14 — Бүх урьдач хичээл болон нэмэлт хичээл үзсэн бол бүртгэнэ / Бүх урьдач хичээл болон нэмэлт хичээл үзсэн бол бүртгэнэ"
+
+exit=1

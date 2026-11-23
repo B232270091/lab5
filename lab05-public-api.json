@@ -1,0 +1,28 @@
+{
+  "info": {
+    "name": "Lab05 — Нийтийн API нэмэлт даалгавар",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Нийтийн API-аас хэрэглэгчдийн жагсаалтыг авна",
+      "request": {
+        "method": "GET",
+        "url": "https://jsonplaceholder.typicode.com/users"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Статус 200 байна\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Хариу массив байна\", function () { pm.expect(pm.response.json()).to.be.an(\"array\"); });",
+              "pm.test(\"Эхний хэрэглэгч Leanne Graham байна\", function () { pm.expect(pm.response.json()[0].name).to.eql(\"Leanne Graham\"); });"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
