@@ -1,0 +1,14 @@
+{
+  "name": "lab05-api-tests",
+  "version": "1.0.0",
+  "private": true,
+  "description": "F.CSA313 лаборатори 5 — хичээлд бүртгүүлэх API тест",
+  "scripts": {
+    "start": "node server.js",
+    "test": "newman run lab05-collection.json --color off",
+    "test:fail": "newman run lab05-collection-fail.json --color off"
+  },
+  "devDependencies": {
+    "newman": "6.2.1"
+  }
+}
